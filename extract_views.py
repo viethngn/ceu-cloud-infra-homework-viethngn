@@ -13,7 +13,7 @@ import requests
 # create a function to used in the for loop
 def upload_processed_wiki_data_to_s3(date_param="2023-10-15"):
     # %%
-    # SUBJECT DATE ### TRY A FEW OF THIS IN CLASS - INSTRUCTONS WILL COME FROM THE INSTRUCTOR
+    # define the DATE_PARAM
     DATE_PARAM = date_param
 
     date = datetime.datetime.strptime(DATE_PARAM, "%Y-%m-%d")
@@ -50,13 +50,12 @@ def upload_processed_wiki_data_to_s3(date_param="2023-10-15"):
 
     # %%
     # Saving the contents of `wiki_response_body` to a file
-    # The file is named in the format `raw-edits-YYYY-MM-DD.txt` and saved in the folder defined in `RAW_LOCATION_BASE`
-
     fp = RAW_LOCATION_BASE
     with open(f"{fp}/raw-views-{DATE_PARAM}.txt", "w") as file:
         file.write(wiki_response_body)
 
     # %%
+    # define the S3 client
     s3 = boto3.client("s3")
     S3_WIKI_BUCKET = "nguyen-viet-ceu2023"
 
@@ -127,6 +126,7 @@ def upload_processed_wiki_data_to_s3(date_param="2023-10-15"):
 
 
 # %%
+# loop to upload wiki data from 2023-10-15 to 2023-10-21
 if __name__ == '__main__':
     for day in range(15, 22):
         upload_processed_wiki_data_to_s3(date_param=f"2023-10-{day}")
